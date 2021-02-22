@@ -44,9 +44,13 @@ export class UsersService {
       })
         .then((db: SQLiteObject) => {
           this.storage = db;
-          this.storage.executeSql('CREATE TABLE IF NOT EXISTS usertable (id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT, lastName TEXT, email TEXT, dateOfBirth TEXT, emailVerified BOOLEAN, createDate TEXT, updateMethod TEXT, syncFailed BOOLEAN)', [])
+          this.storage.executeSql('select * from usertable', [])
             .then(() => this.getListDb())
-            .catch(err => console.log(err));
+            .catch(() => {
+              this.storage.executeSql('CREATE TABLE IF NOT EXISTS usertable (id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT, lastName TEXT, email TEXT, dateOfBirth TEXT, emailVerified BOOLEAN, createDate TEXT, updateMethod TEXT, syncFailed BOOLEAN)', [])
+                .then(() => this.getListDb(true))
+                .catch(err => console.log(err));
+            });
         });
     });
   }
@@ -75,7 +79,7 @@ export class UsersService {
       });
   }
 
-  getListDb() {
+  getListDb(isInit?: boolean) {
     return this.storage.executeSql('SELECT * FROM usertable', []).then(res => {
       let items: UserModel[] = [];
       if (res.rows.length > 0) {
@@ -94,7 +98,7 @@ export class UsersService {
         }
         this.users$.next(items);
       } else {
-        this.getInitList();
+        isInit ? this.getInitList() : this.users$.next([]);
       }
     });
   }

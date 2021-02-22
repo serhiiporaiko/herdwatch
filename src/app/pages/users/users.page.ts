@@ -25,7 +25,7 @@ export class UsersPage implements OnInit, OnDestroy {
     const users$ = this.usersService.users$.pipe(
       takeUntil(this.destroy$),
       distinctUntilChanged(),
-      filter(users => !!(users && users.length))
+      filter(users => !!users)
     );
     users$.subscribe(users => {
       const activeUsers = users.filter(u => u.updateMethod !== this.UPDATE_METHOD.DELETE);
