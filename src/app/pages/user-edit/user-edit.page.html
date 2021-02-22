@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [text]="'Back'"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ user ? 'Edit user' : 'New user' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form 
+    *ngIf="userForm"
+    (submit)="(userForm?.valid && isFormChanged) ? save() : null"
+    [formGroup]="userForm"
+    margin-top>
+  <ion-item
+      [ngClass]="{'invalid': (firstName.invalid && (firstName.dirty || firstName.touched))}">
+      <ion-label position="stacked">{{ 'First name' }}</ion-label>
+      <ion-input type="text" maxlength="200" [formControl]="firstName"></ion-input>
+  </ion-item>
+
+  <ion-item
+      [ngClass]="{'invalid': (lastName.invalid && (lastName.dirty || lastName.touched))}">
+      <ion-label position="stacked">{{ 'Last name' }}</ion-label>
+      <ion-input type="text" maxlength="200" [formControl]="lastName"></ion-input>
+  </ion-item> 
+  
+  <ion-item
+      [ngClass]="{'invalid': (email.invalid && (email.dirty || email.touched))}">
+      <ion-label position="stacked">{{ 'Email' }}</ion-label>
+      <ion-input type="email" maxlength="200" [formControl]="email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+      <ion-label position="stacked">{{ 'Date of birth' }}</ion-label>
+      <ion-datetime 
+        [(ngModel)]="selectedDate" 
+        (ionChange)="checkChanges()"
+        [ngModelOptions]="{standalone: true}"
+        displayFormat="MMM DD, YYYY" 
+        pickerFormat="YYYY-MMMM-DD"
+        min="1910-01-01" 
+        [max]="currentDate | date: 'yyyy-MM-dd'"
+        doneText="Ok">
+      </ion-datetime>
+  </ion-item>
+</form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar padding-horizontal padding-top>
+    <ion-button
+      (click)="save()"
+      [disabled]="!userForm?.valid || !isFormChanged"
+      expand="full"
+      color="secondary">
+      {{ 'Save' }}
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
