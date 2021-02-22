@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Users</ion-title>
+    <ion-buttons *ngIf="isSaveButtonVisible" slot="end">
+      <ion-button 
+        (click)="save()"
+        color="secondary">
+        {{ 'Save changes' }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list *ngIf="users && users.length">
+    <!-- <ng-container > -->
+    <ion-item-sliding *ngFor="let user of users">
+      <ion-item-options side="end">
+
+        <div *ngIf="user.updateMethod !== UPDATE_METHOD.DELETE" class="trash_flex_wrap">
+          <ion-icon
+            color="danger"
+            name="trash"
+            style="zoom:2"
+            (click)="presentConfirm($event, user)">
+          </ion-icon>
+        </div>
+
+      </ion-item-options>
+      <ion-item
+        class="mb8 pl0"
+        lines="none">
+        <user-card-component 
+          [ngStyle]="user.updateMethod === UPDATE_METHOD.DELETE && {'opacity': '0.5'}" 
+          [user]="user">
+        </user-card-component>
+      </ion-item>
+    </ion-item-sliding>
+    <!-- </ng-container> -->
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar
+    padding-horizontal
+    padding-top>
+    <ion-button
+      [routerLink]="['/user-edit']"
+      expand="full"
+      color="secondary">
+      {{ 'Add new user' }}
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

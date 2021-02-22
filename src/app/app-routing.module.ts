@@ -3,14 +3,19 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    path: 'users',
+    loadChildren: () => import('./pages/users/users.module').then( m => m.UsersPageModule)
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'users',
     pathMatch: 'full'
   },
+  {
+    path: 'user-edit',
+    loadChildren: () => import('./pages/user-edit/user-edit.module').then( m => m.UserEditPageModule)
+  },
+ 
 ];
 
 @NgModule({

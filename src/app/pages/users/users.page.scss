@@ -1,0 +1,18 @@
+ion-item {
+    --padding-end: 0px;
+    --inner-padding-end: 0px;
+    --padding-start: 0px;
+    box-shadow: 0 1px 5px 0 rgba(80,98,126,0.1);
+}
+.mb8 {
+    margin-bottom: 8px;
+}
+
+.trash_flex_wrap {
+    display: flex;
+    height: inherit;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 100px;
+}
+
