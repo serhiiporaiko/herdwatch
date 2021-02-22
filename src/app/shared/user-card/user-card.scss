@@ -1,0 +1,24 @@
+::ng-deep user-card-component {
+    width: 100%;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.mb5 {
+    margin-bottom: 5px;
+}
+
+.flex_wrap {
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.flex_column {
+    display: flex;
+    height: inherit;
+    justify-content: space-around;
+    align-items: center;
+}

@@ -1,0 +1,23 @@
+<div
+  *ngIf="user"
+  (click)="openUserEditPage()"
+  class="flex_wrap">
+  <div>
+    <h4 class="mt10 mb5">{{ user.firstName}} {{ user.lastName }}</h4>
+    <a>{{ user.email }}</a>
+    <br>
+    <span>{{ user.dateOfBirth }}</span>
+  </div>
+
+  <div class="flex_column">
+  <ion-button
+  *ngIf="user.updateMethod && user.syncFailed" 
+    (click)="sync($event)"
+    fill="outline"
+    color="danger"
+    size="small"
+    style="opacity: 1;">
+    {{ 'Retry sync' }}
+  </ion-button>
+  </div>
+</div>
