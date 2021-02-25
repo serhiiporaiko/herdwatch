@@ -44,7 +44,7 @@ export class ToastService {
       setTimeout(() => {
         if (toast && document.getElementById(id) && (this.touchStart - e.touches[0].clientY > 0)) {
           toast.dismiss();
-        };
+        }
       }, 50);
     };
     element.addEventListener('touchstart', startHandler);
