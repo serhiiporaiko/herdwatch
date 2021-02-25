@@ -8,48 +8,37 @@ export class ToastService {
   disconnectedToast: HTMLIonToastElement;
   isShowed: boolean;
 
-  constructor(
-    private toast: ToastController) {
+  constructor(private toast: ToastController) { }
+
+  async createToast(message: string, className: string, duration?: number) {
+    const toast = await this.toast.create({
+      message: message,
+      position: 'top',
+      cssClass: className,
+      duration: duration || null
+    });
+    await toast.present();
+    this.handleToastSwipe(toast);
+    return toast;
   }
 
   async showSuccessToast(message?: string) {
-    let toast = await this.toast.create({
-      message: message || 'Success',
-      position: 'top',
-      cssClass: 'custom_toast',
-      color: 'success',
-      duration: 5000
-    });
-    toast.present().then(() => this.handleToastSwipe(toast));
+    this.createToast(message || 'Success', 'success_toast', 5000);
   }
 
   async showInfoToast(message?: string) {
-    let toast = await this.toast.create({
-      message: message || 'Info',
-      position: 'top',
-      cssClass: 'custom_toast',
-      color: "warning",
-      duration: 7000
-    });
-    toast.present().then(() => this.handleToastSwipe(toast));
+    return this.createToast(message || 'Info', 'info_toast', 7000);
   }
 
   async showErrorToast(message?: string) {
-    let toast = await this.toast.create({
-      message: message || 'Something went wrong!',
-      position: 'top',
-      cssClass: 'custom_toast',
-      color: 'danger',
-      duration: 5000
-    });
-    toast.present().then(() => this.handleToastSwipe(toast));
+    this.createToast(message || 'Something went wrong!', 'error_toast', 5000);
   }
 
   handleToastSwipe(toast: HTMLIonToastElement) {
-    let id = toast.id;
-    let element = document.getElementById(id);
-    let startHandler = (e: TouchEvent) => this.touchStart = e.touches[0].clientY;
-    let moveHandler = (e: TouchEvent) => {
+    const id = toast.id;
+    const element = document.getElementById(id);
+    const startHandler = (e: TouchEvent) => this.touchStart = e.touches[0].clientY;
+    const moveHandler = (e: TouchEvent) => {
       element.removeEventListener('touchstart', startHandler);
       element.removeEventListener('touchmove', moveHandler);
       setTimeout(() => {
